@@ -1,0 +1,8 @@
+{
+  "name": "میراثی کورد",
+  "description": "گەنجینەی مێژوو، ئەدەب و کەلتووری کورد - Digital Kurdish Heritage Library",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
