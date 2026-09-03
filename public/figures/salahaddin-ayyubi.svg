@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#221711"/>
+      <stop offset="50%" stop-color="#3d271d"/>
+      <stop offset="100%" stop-color="#18100b"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f3e0aa"/>
+      <stop offset="50%" stop-color="#c59b27"/>
+      <stop offset="100%" stop-color="#8a6711"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="24" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="170" fill="none" stroke="url(#gold)" stroke-width="3" stroke-dasharray="8 4" opacity="0.6"/>
+  <circle cx="200" cy="200" r="150" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.8"/>
+  <g transform="translate(200,165)">
+    <path d="M-50,20 Q0,-70 50,20 Q0,0 -50,20 Z" fill="url(#gold)" opacity="0.9"/>
+    <circle cx="0" cy="-20" r="12" fill="url(#gold)"/>
+  </g>
+  <path d="M140,290 C140,210 260,210 260,290 C260,330 140,330 140,290 Z" fill="#2d1c13" stroke="url(#gold)" stroke-width="2"/>
+  <circle cx="200" cy="180" r="45" fill="#e8d3b0" stroke="#8a6711" stroke-width="2"/>
+  <path d="M155,170 C155,120 245,120 245,170 C245,130 155,130 155,170 Z" fill="#1b4332" stroke="url(#gold)" stroke-width="2"/>
+  <path d="M170,205 Q200,225 230,205 C220,230 180,230 170,205 Z" fill="#3d271d"/>
+  <text x="200" y="345" font-family="'Noto Naskh Arabic', 'Scheherazade New', serif" font-size="22" font-weight="bold" fill="url(#gold)" text-anchor="middle">سەلاحەدینی ئەیوبی</text>
+  <text x="200" y="370" font-family="'Noto Naskh Arabic', sans-serif" font-size="12" fill="#d3c2a3" text-anchor="middle">سەرچاوەی مێژوویی: Wikimedia Commons</text>
+</svg>

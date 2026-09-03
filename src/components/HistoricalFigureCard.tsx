@@ -1,14 +1,16 @@
 import React from 'react';
 import { HistoricalFigure, SourceStatusType } from '../types';
 import { KurdishStarMedallion } from './KurdishPattern';
-import { MapPin, Calendar, BookOpen, ShieldCheck, HelpCircle, CheckCircle2, Bookmark } from 'lucide-react';
+import { MapPin, Calendar, ShieldCheck, HelpCircle, CheckCircle2, Bookmark } from 'lucide-react';
+import { SmartImage } from './SmartImage';
 
 interface HistoricalFigureCardProps {
   key?: React.Key;
   figure: HistoricalFigure;
   isFavorite: boolean;
   onToggleFavorite: (e: React.MouseEvent, id: string) => void;
-  onSelect: (figure: HistoricalFigure) => void;
+  onSelect?: (figure: HistoricalFigure) => void;
+  onClick?: () => void;
 }
 
 export function HistoricalFigureCard({
@@ -16,8 +18,13 @@ export function HistoricalFigureCard({
   isFavorite,
   onToggleFavorite,
   onSelect,
+  onClick,
 }: HistoricalFigureCardProps) {
-  // Source status badge styling
+  const handleClick = () => {
+    if (onClick) onClick();
+    if (onSelect) onSelect(figure);
+  };
+
   const getStatusBadge = (status: SourceStatusType) => {
     switch (status) {
       case 'پشتڕاستکراو':
@@ -58,8 +65,8 @@ export function HistoricalFigureCard({
 
   return (
     <div
-      onClick={() => onSelect(figure)}
-      className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-[#c59b27]/30 hover:border-[#801b22] transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden group border-t-4 border-t-[#801b22]"
+      onClick={handleClick}
+      className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md border border-[#c59b27]/30 hover:border-[#801b22] transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden group border-t-4 border-t-[#801b22]"
     >
       {/* Background subtle manuscript geometry */}
       <div className="absolute top-2 left-2 text-[#c59b27] opacity-10 pointer-events-none group-hover:opacity-25 transition-opacity">
@@ -88,37 +95,53 @@ export function HistoricalFigureCard({
           </div>
         </div>
 
-        {/* Title and Alternate Names */}
-        <div className="mb-2">
-          <h3 className="font-serif font-extrabold text-lg text-[#2c1b0e] group-hover:text-[#801b22] transition-colors">
-            {figure.name}
-          </h3>
-          {figure.kurdishName && figure.kurdishName !== figure.name && (
-            <p className="text-xs text-[#671217] font-serif font-medium mt-0.5">
-              {figure.kurdishName}
-            </p>
-          )}
-        </div>
+        {/* Title and Portrait Row */}
+        <div className="flex items-start gap-3.5 mb-3">
+          {/* Portrait Image */}
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 border-[#c59b27] bg-[#ede3ce] flex-shrink-0 shadow-xs">
+            <SmartImage
+              src={figure.imageResource}
+              fallbackSrcs={figure.gallery?.map((g) => g.url)}
+              alt={figure.name}
+              fallbackTitle={figure.name}
+              fallbackSubtitle="وێنەی فۆتۆ بەردەست نییە"
+              category={figure.category}
+              objectFit="cover"
+              showZoomOnHover={false}
+            />
+          </div>
 
-        {/* Key Info Metadata Pills */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#523d2c] font-serif mb-3">
-          {(figure.birthYear || figure.deathYear) && (
-            <span className="flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5 text-[#c59b27]" />
-              <span>{figure.birthYear || '?'} - {figure.deathYear || '?'}</span>
-            </span>
-          )}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-serif font-extrabold text-base sm:text-lg text-[#2c1b0e] group-hover:text-[#801b22] transition-colors truncate">
+              {figure.name}
+            </h3>
+            {figure.kurdishName && figure.kurdishName !== figure.name && (
+              <p className="text-xs text-[#671217] font-serif font-medium mt-0.5 truncate">
+                {figure.kurdishName}
+              </p>
+            )}
 
-          {figure.region && (
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-[#801b22]" />
-              <span>{figure.cityOrPlace || figure.region}</span>
-            </span>
-          )}
+            {/* Dates / Region */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#523d2c] font-serif mt-1.5">
+              {(figure.birthYear || figure.deathYear) && (
+                <span className="flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-[#c59b27]" />
+                  <span>{figure.birthYear || '?'} - {figure.deathYear || '?'}</span>
+                </span>
+              )}
+
+              {figure.region && (
+                <span className="flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-[#801b22]" />
+                  <span className="truncate">{figure.cityOrPlace || figure.region}</span>
+                </span>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Short Biography excerpt */}
-        <p className="text-xs text-[#3c2817] font-serif leading-relaxed line-clamp-3 mb-4">
+        <p className="text-xs text-[#3c2817] font-serif leading-relaxed line-clamp-3 mb-4 bg-[#f5efe0]/50 p-2.5 rounded-lg border border-[#e2d2b8]/60">
           {figure.biography}
         </p>
       </div>
@@ -140,3 +163,4 @@ export function HistoricalFigureCard({
     </div>
   );
 }
+

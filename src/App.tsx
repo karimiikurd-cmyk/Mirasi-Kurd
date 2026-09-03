@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Person, Story, ActiveTab } from './types';
+import { Person, Story, ActiveTab, DetailedWork, LiteratureWork } from './types';
 import { INITIAL_PEOPLE } from './data/people';
 import { INITIAL_STORIES } from './data/stories';
 import { TopHeader } from './components/TopHeader';
@@ -15,6 +15,19 @@ import { SettingsModal } from './components/SettingsModal';
 import { MobileFrame } from './components/MobileFrame';
 import { TimelineView } from './components/TimelineView';
 import { RegionsView } from './components/RegionsView';
+import { PoliticalView } from './components/PoliticalView';
+import { ImageArchiveView } from './components/ImageArchiveView';
+import { NaliPoetryView } from './components/NaliPoetryView';
+import { KhaniPoetryView } from './components/KhaniPoetryView';
+import { SherkoPoetryView } from './components/SherkoPoetryView';
+import { SheikhOthmanView } from './components/SheikhOthmanView';
+import { SirajAlQulubView } from './components/SirajAlQulubView';
+import { BarPahnayeYadView } from './components/BarPahnayeYadView';
+import { SirajMunirView } from './components/SirajMunirView';
+import { ZhaniGalNovelView } from './components/ZhaniGalNovelView';
+import { ALL_NALI_POEMS } from './data/nali';
+import { ShareModal } from './components/ShareModal';
+import { WorkDetailModal } from './components/WorkDetailModal';
 import { KurdishStarMedallion, KurdishOrnamentalDivider, ParchmentCornerDecoration } from './components/KurdishPattern';
 import { 
   Users, 
@@ -30,7 +43,9 @@ import {
   ChevronLeft,
   X,
   Filter,
-  History
+  History,
+  Camera,
+  Share2
 } from 'lucide-react';
 
 export default function App() {
@@ -46,6 +61,8 @@ export default function App() {
 
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  const [selectedWork, setSelectedWork] = useState<DetailedWork | LiteratureWork | null>(null);
+  const [shareData, setShareData] = useState<{ title: string; text: string; url?: string } | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>('md');
   const [isDeviceFrame, setIsDeviceFrame] = useState(false);
@@ -70,6 +87,10 @@ export default function App() {
     setFavoriteIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
+  };
+
+  const handleOpenShare = (title: string, text: string, url?: string) => {
+    setShareData({ title, text, url });
   };
 
   // Font size multiplier class
@@ -127,6 +148,22 @@ export default function App() {
       },
     },
     {
+      title: 'کەسایەتییە سیاسییەکان',
+      icon: Landmark,
+      count: 'سیاسی و حوکمڕانی',
+      onClick: () => {
+        setActiveTab('political');
+      },
+    },
+    {
+      title: 'ئەرشیفی وێنەکان',
+      icon: Camera,
+      count: 'وێنەی بەڵگەدار',
+      onClick: () => {
+        setActiveTab('gallery');
+      },
+    },
+    {
       title: 'شێخ و زانایان',
       icon: Crown,
       count: INITIAL_PEOPLE.filter((p) => p.category === 'شێخ و زانایان').length,
@@ -145,28 +182,11 @@ export default function App() {
       },
     },
     {
-      title: 'نووسەران',
-      icon: PenTool,
-      count: INITIAL_PEOPLE.filter((p) => p.category === 'نووسەران').length,
-      onClick: () => {
-        setPeopleCategoryFilter('نووسەران');
-        setActiveTab('people');
-      },
-    },
-    {
       title: 'ناوچەکان و نەخشە',
       icon: Compass,
       count: 'ناوچەکان',
       onClick: () => {
         setActiveTab('regions');
-      },
-    },
-    {
-      title: 'چیرۆک و ئەفسانەکان',
-      icon: ScrollText,
-      count: INITIAL_STORIES.length,
-      onClick: () => {
-        setActiveTab('stories');
       },
     },
   ];
@@ -305,6 +325,35 @@ export default function App() {
               onSelectRegion={(r) => {
                 setTimelineRegionFilter(r);
               }}
+              onOpenShareModal={handleOpenShare}
+              onOpenDiwanNali={() => setActiveTab('nali')}
+              onOpenDiwanKhani={() => setActiveTab('khani')}
+              onOpenDiwanSherko={() => setActiveTab('sherko')}
+              onOpenDiwanSheikhOthman={() => setActiveTab('siraj-al-qulub')}
+              onOpenSirajAlQulub={() => setActiveTab('siraj-al-qulub')}
+              onOpenBarPahnayeYad={() => setActiveTab('bar-pahnaye-yad')}
+            />
+          )}
+
+          {/* ================= POLITICAL FIGURES TAB «کەسایەتییە سیاسییەکان» ================= */}
+          {activeTab === 'political' && (
+            <PoliticalView
+              favoriteIds={favoriteIds}
+              onToggleFavorite={toggleFavorite}
+              onOpenShareModal={handleOpenShare}
+              onOpenDiwanNali={() => setActiveTab('nali')}
+              onOpenDiwanKhani={() => setActiveTab('khani')}
+              onOpenDiwanSherko={() => setActiveTab('sherko')}
+              onOpenDiwanSheikhOthman={() => setActiveTab('siraj-al-qulub')}
+              onOpenSirajAlQulub={() => setActiveTab('siraj-al-qulub')}
+              onOpenBarPahnayeYad={() => setActiveTab('bar-pahnaye-yad')}
+            />
+          )}
+
+          {/* ================= IMAGE ARCHIVE GALLERY TAB «ئەرشیفی وێنەکان» ================= */}
+          {activeTab === 'gallery' && (
+            <ImageArchiveView
+              onOpenShareModal={handleOpenShare}
             />
           )}
 
@@ -317,6 +366,14 @@ export default function App() {
                 setTimelineRegionFilter(regionName);
                 setActiveTab('timeline');
               }}
+              onOpenDiwanNali={() => setActiveTab('nali')}
+              onOpenDiwanKhani={() => setActiveTab('khani')}
+              onOpenDiwanSherko={() => setActiveTab('sherko')}
+              onOpenDiwanSheikhOthman={() => setActiveTab('siraj-al-qulub')}
+              onOpenSirajAlQulub={() => setActiveTab('siraj-al-qulub')}
+              onOpenBarPahnayeYad={() => setActiveTab('bar-pahnaye-yad')}
+              onOpenSirajMunir={() => setActiveTab('siraj-munir')}
+              onOpenZhaniGal={() => setActiveTab('zhani-gal')}
             />
           )}
 
@@ -556,6 +613,62 @@ export default function App() {
             </div>
           )}
 
+          {/* ================= NALI DIWAN TAB «دیوانی نالی» ================= */}
+          {activeTab === 'nali' && (
+            <NaliPoetryView
+              onOpenShareModal={handleOpenShare}
+              onBackToProfile={() => setActiveTab('people')}
+            />
+          )}
+
+          {/* ================= KHANI DIWAN TAB «دیوانی ئەحمەدی خانی» ================= */}
+          {activeTab === 'khani' && (
+            <KhaniPoetryView
+              onOpenShareModal={handleOpenShare}
+              onBackToProfile={() => setActiveTab('people')}
+            />
+          )}
+
+          {/* ================= SHERKO BEKAS DIWAN TAB «دیوانی شێرکۆ بێکەس» ================= */}
+          {activeTab === 'sherko' && (
+            <SherkoPoetryView
+              onOpenShareModal={handleOpenShare}
+              onBackToProfile={() => setActiveTab('people')}
+            />
+          )}
+
+          {/* ================= SIRAJ AL-QULUB TAB «کتێبی سراج القلوب و ڕیسالەکان» ================= */}
+          {(activeTab === 'siraj-al-qulub' || activeTab === 'sheikh-othman') && (
+            <SirajAlQulubView
+              onOpenShareModal={handleOpenShare}
+              onBackToProfile={() => setActiveTab('people')}
+            />
+          )}
+
+          {/* ================= BAR PAHNAYE YAD TAB «یادنامەی بر پهنه یاد» ================= */}
+          {activeTab === 'bar-pahnaye-yad' && (
+            <BarPahnayeYadView
+              onOpenShareModal={handleOpenShare}
+              onBackToProfile={() => setActiveTab('people')}
+            />
+          )}
+
+          {/* ================= SIRAJ MUNIR TAB «پەڕتووکی سراج منیر» ================= */}
+          {activeTab === 'siraj-munir' && (
+            <SirajMunirView
+              onOpenShareModal={handleOpenShare}
+              onBackToProfile={() => setActiveTab('people')}
+            />
+          )}
+
+          {/* ================= ZHANI GAL TAB «ڕۆمانی ژانی گەل» ================= */}
+          {activeTab === 'zhani-gal' && (
+            <ZhaniGalNovelView
+              onOpenShareModal={handleOpenShare}
+              onBackToProfile={() => setActiveTab('people')}
+            />
+          )}
+
           {/* ================= LITERATURE TAB «ئەدەب و هونەر» ================= */}
           {activeTab === 'literature' && <LiteratureSection />}
 
@@ -573,19 +686,72 @@ export default function App() {
         </main>
 
         {/* Modals & Dialogs */}
-        <PersonDetailModal
-          person={selectedPerson}
-          onClose={() => setSelectedPerson(null)}
-          isFavorite={selectedPerson ? favoriteIds.includes(selectedPerson.id) : false}
-          onToggleFavorite={toggleFavorite}
-        />
+        {selectedPerson && (
+          <PersonDetailModal
+            person={selectedPerson}
+            onClose={() => setSelectedPerson(null)}
+            isFavorite={favoriteIds.includes(selectedPerson.id)}
+            onToggleFavorite={toggleFavorite}
+            onOpenDiwanNali={() => {
+              setSelectedPerson(null);
+              setActiveTab('nali');
+            }}
+            onOpenDiwanKhani={() => {
+              setSelectedPerson(null);
+              setActiveTab('khani');
+            }}
+            onOpenDiwanSherko={() => {
+              setSelectedPerson(null);
+              setActiveTab('sherko');
+            }}
+            onOpenDiwanSheikhOthman={() => {
+              setSelectedPerson(null);
+              setActiveTab('siraj-al-qulub');
+            }}
+            onOpenSirajAlQulub={() => {
+              setSelectedPerson(null);
+              setActiveTab('siraj-al-qulub');
+            }}
+            onOpenBarPahnayeYad={() => {
+              setSelectedPerson(null);
+              setActiveTab('bar-pahnaye-yad');
+            }}
+            onOpenSirajMunir={() => {
+              setSelectedPerson(null);
+              setActiveTab('siraj-munir');
+            }}
+            onOpenZhaniGal={() => {
+              setSelectedPerson(null);
+              setActiveTab('zhani-gal');
+            }}
+          />
+        )}
 
-        <StoryDetailModal
-          story={selectedStory}
-          onClose={() => setSelectedStory(null)}
-          isFavorite={selectedStory ? favoriteIds.includes(selectedStory.id) : false}
-          onToggleFavorite={toggleFavorite}
-        />
+        {selectedStory && (
+          <StoryDetailModal
+            story={selectedStory}
+            onClose={() => setSelectedStory(null)}
+            isFavorite={favoriteIds.includes(selectedStory.id)}
+            onToggleFavorite={toggleFavorite}
+          />
+        )}
+
+        {selectedWork && (
+          <WorkDetailModal
+            work={selectedWork}
+            onClose={() => setSelectedWork(null)}
+            onOpenShareModal={handleOpenShare}
+          />
+        )}
+
+        {shareData && (
+          <ShareModal
+            title={shareData.title}
+            text={shareData.text}
+            url={shareData.url}
+            onClose={() => setShareData(null)}
+          />
+        )}
 
         <SettingsModal
           isOpen={isSettingsOpen}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#231b14"/><stop offset="100%" stop-color="#120d09"/></linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f3e0aa"/><stop offset="50%" stop-color="#c59b27"/><stop offset="100%" stop-color="#8a6711"/></linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="24" fill="url(#bg)"/>
+  <circle cx="200" cy="190" r="140" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <path d="M130,300 C130,220 270,220 270,300 Z" fill="#36281e" stroke="url(#gold)" stroke-width="2"/>
+  <circle cx="200" cy="175" r="45" fill="#e8d3b0" stroke="#8a6711" stroke-width="2"/>
+  <text x="200" y="340" font-family="'Noto Naskh Arabic', serif" font-size="20" font-weight="bold" fill="url(#gold)" text-anchor="middle">ئەحمەدی خانی</text>
+  <text x="200" y="365" font-family="'Noto Naskh Arabic', sans-serif" font-size="12" fill="#d3c2a3" text-anchor="middle">نووسەری شاکاری مەم و زێن (١٦٩٢) - Wikimedia Commons</text>
+</svg>

@@ -10,12 +10,28 @@ interface RegionsViewProps {
   favoriteIds: string[];
   onToggleFavorite: (e: React.MouseEvent, id: string) => void;
   onNavigateToTimelineWithRegion?: (regionName: string) => void;
+  onOpenDiwanNali?: () => void;
+  onOpenDiwanKhani?: () => void;
+  onOpenDiwanSherko?: () => void;
+  onOpenDiwanSheikhOthman?: () => void;
+  onOpenSirajAlQulub?: () => void;
+  onOpenBarPahnayeYad?: () => void;
+  onOpenSirajMunir?: () => void;
+  onOpenZhaniGal?: () => void;
 }
 
 export function RegionsView({
   favoriteIds,
   onToggleFavorite,
   onNavigateToTimelineWithRegion,
+  onOpenDiwanNali,
+  onOpenDiwanKhani,
+  onOpenDiwanSherko,
+  onOpenDiwanSheikhOthman,
+  onOpenSirajAlQulub,
+  onOpenBarPahnayeYad,
+  onOpenSirajMunir,
+  onOpenZhaniGal,
 }: RegionsViewProps) {
   const [selectedRegionKey, setSelectedRegionKey] = useState<string>('کوردستانی عێراق');
   const [selectedCity, setSelectedCity] = useState<string>('هەموو شارەکان');
@@ -205,6 +221,14 @@ export function RegionsView({
         onToggleFavorite={onToggleFavorite}
         allFigures={HISTORICAL_FIGURES}
         onSelectRelatedFigure={(rel) => setSelectedFigure(rel)}
+        onOpenDiwanNali={onOpenDiwanNali}
+        onOpenDiwanKhani={onOpenDiwanKhani}
+        onOpenDiwanSherko={onOpenDiwanSherko}
+        onOpenDiwanSheikhOthman={onOpenDiwanSheikhOthman}
+        onOpenSirajAlQulub={onOpenSirajAlQulub}
+        onOpenBarPahnayeYad={onOpenBarPahnayeYad}
+        onOpenSirajMunir={onOpenSirajMunir}
+        onOpenZhaniGal={onOpenZhaniGal}
       />
 
       <KurdishOrnamentalDivider />

@@ -24,6 +24,13 @@ interface TimelineViewProps {
   onToggleFavorite: (e: React.MouseEvent, id: string) => void;
   initialSearchQuery?: string;
   onSelectRegion?: (region: string) => void;
+  onOpenShareModal?: (title: string, text: string, url?: string) => void;
+  onOpenDiwanNali?: () => void;
+  onOpenDiwanKhani?: () => void;
+  onOpenDiwanSherko?: () => void;
+  onOpenDiwanSheikhOthman?: () => void;
+  onOpenSirajAlQulub?: () => void;
+  onOpenBarPahnayeYad?: () => void;
 }
 
 export function TimelineView({
@@ -31,6 +38,13 @@ export function TimelineView({
   onToggleFavorite,
   initialSearchQuery = '',
   onSelectRegion,
+  onOpenShareModal,
+  onOpenDiwanNali,
+  onOpenDiwanKhani,
+  onOpenDiwanSherko,
+  onOpenDiwanSheikhOthman,
+  onOpenSirajAlQulub,
+  onOpenBarPahnayeYad,
 }: TimelineViewProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('هەموو سەردەمەکان');
   const [selectedCategory, setSelectedCategory] = useState<string>('هەموویان');
@@ -305,6 +319,13 @@ export function TimelineView({
         onToggleFavorite={onToggleFavorite}
         allFigures={HISTORICAL_FIGURES}
         onSelectRelatedFigure={(rel) => setSelectedFigure(rel)}
+        onOpenShareModal={onOpenShareModal}
+        onOpenDiwanNali={onOpenDiwanNali}
+        onOpenDiwanKhani={onOpenDiwanKhani}
+        onOpenDiwanSherko={onOpenDiwanSherko}
+        onOpenDiwanSheikhOthman={onOpenDiwanSheikhOthman}
+        onOpenSirajAlQulub={onOpenSirajAlQulub}
+        onOpenBarPahnayeYad={onOpenBarPahnayeYad}
       />
 
       <KurdishOrnamentalDivider />

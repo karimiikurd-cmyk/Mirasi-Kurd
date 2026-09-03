@@ -1,7 +1,8 @@
 import React from 'react';
 import { Person } from '../types';
-import { Bookmark, ArrowLeft, Calendar, MapPin } from 'lucide-react';
+import { Bookmark, ArrowLeft, Calendar } from 'lucide-react';
 import { KurdishStarMedallion } from './KurdishPattern';
+import { SmartImage } from './SmartImage';
 
 interface PersonCardProps {
   person: Person;
@@ -27,15 +28,18 @@ export const PersonCard: React.FC<PersonCardProps> = ({
       <div>
         {/* Header with Portrait and Category */}
         <div className="flex items-start gap-3.5 mb-3">
-          {/* Portrait Image Placeholder */}
+          {/* Portrait Image */}
           <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 border-[#c59b27] bg-[#ede3ce] flex-shrink-0 shadow-xs">
-            <img
+            <SmartImage
               src={person.imageResource}
+              fallbackSrcs={person.gallery?.map((g) => g.url)}
               alt={person.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
+              fallbackTitle={person.name}
+              fallbackSubtitle="وێنەی ڕاستەقینە بەردەست نییە"
+              category={person.category}
+              objectFit="cover"
+              showZoomOnHover={false}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
           </div>
 
           <div className="flex-1 min-w-0">
@@ -96,3 +100,4 @@ export const PersonCard: React.FC<PersonCardProps> = ({
     </div>
   );
 };
+
